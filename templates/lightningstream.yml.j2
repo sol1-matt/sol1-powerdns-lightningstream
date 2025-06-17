@@ -1,0 +1,43 @@
+# Ansible Managed
+instance: {{ powerdns_lightningstream_instance }}
+lmdbs:
+{% for section, config in powerdns_lightningstream_lmdbs.items() %}
+  {{ section }}:
+{% for sec_key, sec_value in config.items() %}
+{% if sec_key == "options" %}
+    options:
+{% for opt_key, opt_value in sec_value.items() %}
+      {{ opt_key }}: {{ opt_value }}
+{% endfor %}
+{% else %}
+    {{ sec_key }}: {{ sec_value }}
+{% endif %}
+{% endfor %}
+{% endfor %}
+
+storage:
+{% for section, config in powerdns_lightningstream_storage.items() %}
+{% if section == "type" %}
+  {{ section }}: {{ config }}
+{% else %}
+  {{ section }}:
+{% for sec_key, sec_value in config.items() %}
+    {{ sec_key }}: {{ sec_value }}
+{% endfor %}
+{% endif %}
+{% endfor %}
+
+{% if powerdns_lightningstream_http is defined %}
+http:
+{% for sec_key, sec_value in powerdns_lightningstream_http.items() %}
+    {{ sec_key }}: {{ sec_value }}
+{% endfor %}
+{% endif %}
+
+{% if powerdns_lightningstream_log is defined %}
+log:
+{% for sec_key, sec_value in powerdns_lightningstream_log.items() %}
+    {{ sec_key }}: {{ sec_value }}
+{% endfor %}
+{% endif %}
+

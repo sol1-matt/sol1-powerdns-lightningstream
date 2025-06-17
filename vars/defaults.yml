@@ -1,0 +1,6 @@
+powerdns_lightningstream_golang_packages:
+  - git
+  - build-essential
+  - ca-certificates
+  - liblmdb-dev
+  - wget

@@ -1,0 +1,16 @@
+---
+- name: Load OS-specific defaults
+  include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_distribution | lower }}-{{ ansible_distribution_major_version }}.yml"
+        - "{{ ansible_distribution | lower }}.yml"
+        - "default.yml"
+      paths:
+        - "{{ role_path }}/vars"
+
+- name: Build lightningstream
+  include_tasks: build.yml
+
+- name: Configure lightningstream
+  include_tasks: configure.yml
